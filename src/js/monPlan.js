@@ -38,10 +38,23 @@ window.addEventListener("load", function() {
     //hides main div upon load
     main.style.display="none";
 
-    //enables popup message
-    $("#displayMessage").popup();
+    //hides components not required at welcome on load
     $("#unitSearch").hide();
     $("#creditCounter").hide();
+    $("#displayMessage").hide();
+
+    //enables popup message
+    $("#displayMessage").popup();
+
+    /* function to keep components we don't want to show hidden until a user 
+       has moved from the welcome menu to the planning stage
+    */
+    function showPlanUI(){
+        $("#unitSearch").show();
+        $("#creditCounter").show();
+        $("#displayMessage").show();
+    };
+   
 
     // Load course structure if it exists
     var serialised = localStorage.getItem("courseStructure");
@@ -59,8 +72,8 @@ window.addEventListener("load", function() {
         var currentYear = new Date().getFullYear();
         courseStructure = new CourseStructure(myTable, parseInt(startYr.value) || currentYear, parseInt(endYr.value) || (currentYear + 2));
         courseStructure.populateTotalCredits(credits);
-        $("#unitSearch").show();
-        $("#creditCounter").show();
+        showPlanUI();
+        
 
     });
 
@@ -69,8 +82,7 @@ window.addEventListener("load", function() {
         main.style.display = "block";
         courseStructure = new CourseStructure(myTable);
         courseStructure.populateTotalCredits(credits);
-        $("#unitSearch").show();
-        $("#creditCounter").show();
+        showPlanUI();
     });
 
     save.addEventListener("click", function() {
