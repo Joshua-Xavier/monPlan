@@ -3,3 +3,4 @@ node_modules
 build
 working
 bower_components
+.DS_Store
